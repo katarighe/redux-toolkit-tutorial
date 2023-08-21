@@ -10,10 +10,16 @@ const initialState = {
   isLoading: true,
 };
 
-export const getCartItems = createAsyncThunk("cart/getCartItems", () => {
-  return fetch(url)
-    .then((resp) => resp.json())
-    .catch((err) => console.log(err));
+export const getCartItems = createAsyncThunk("cart/getCartItems", async (name, thunkAPI) => {
+  try {
+    // console.log(name);
+    // console.log(thunkAPI.getState());
+    const resp = await axios(url);
+    // thunkAPI.dispatch(openModal);
+    return resp.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue('something went wrong');
+  }
 });
 
 const cartSlice = createSlice({
@@ -46,16 +52,17 @@ const cartSlice = createSlice({
       state.amount = total;
     },
   },
-  extraReducers:{
+  extraReducers: {
     [getCartItems.pending]: (state) => {
       state.isLoading = true;
     },
     [getCartItems.fulfilled]: (state, action) => {
-      console.log(action);
+      // console.log(action);
       state.isLoading = true;
       state.cartItems = action.payload;
     },
-    [getCartItems.rejected]: (state) => {
+    [getCartItems.rejected]: (state, action) => {
+      console.log(action);
       state.isLoading = false;
     },
   },
