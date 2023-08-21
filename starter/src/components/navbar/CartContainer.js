@@ -32,7 +32,7 @@ const CartContainer = () => {
                 total <span>${total}</span>
             </h4>
             </div>
-            <button className='clear-btn'>clear cart</button>
+            <button className='btn clear-btn'>clear cart</button>
         </footer>
         </section>
     );
