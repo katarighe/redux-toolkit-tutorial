@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import calculateTotals from './features/cart/cartSlice';
 
 function App() {
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems } = useSelector((store) => store.cart);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(calculateTotals());
